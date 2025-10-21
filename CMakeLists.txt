@@ -12,3 +12,11 @@ set_target_properties(bmatmul PROPERTIES
     CUDA_SEPARABLE_COMPILATION ON
     CXX_STANDARD 17
 )
+
+add_custom_command(
+    TARGET bmatmul
+    POST_BUILD
+    COMMAND echo "=== Running NVIDIA Nsight Systems Profiling ==="
+    COMMAND nsys profile --stats=true ./bmatmul 256 512 384 16 119
+    COMMENT "Profiling CUDA app with Nsight Systems"
+)
